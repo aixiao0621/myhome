@@ -6,18 +6,16 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed class Screen(
-    var id: String,
+    val id: String,
     val title: String,
     val icon: ImageVector,
 ) {
-
-    object Home : Screen("home", "喝水", Icons.Outlined.Home)
-    object Setting : Screen("setting", "设置", Icons.Outlined.Settings)
+    object Home : Screen("home", "Home", Icons.Outlined.Home)
+    object Setting : Screen("setting", "Settings", Icons.Outlined.Settings)
 
     object Items {
         val list = listOf(
             Home, Setting
         )
     }
-
 }

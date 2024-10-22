@@ -21,14 +21,22 @@ fun Navigation(
     NavigationBar {
         items.forEach { item ->
             NavigationBarItem(
-                selected = currentDestination?.hierarchy?.any { it.route == item.id } == true,
-                onClick = { navController.navigate(item.id) },
-                label = { Text(item.id) },
+                selected = currentDestination?.route == item.id,
+                onClick = {
+                    navController.navigate(item.id) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                },
+                label = { Text(item.title) },
                 alwaysShowLabel = false,
                 icon = {
                     Icon(
                         imageVector = item.icon,
-                        contentDescription = null,
+                        contentDescription = item.title,
                     )
                 }
             )
