@@ -1,5 +1,6 @@
 package az.autumn.myhome.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -7,11 +8,16 @@ import az.autumn.myhome.data.model.DeviceState
 import az.autumn.myhome.data.repository.DeviceRepository
 import az.autumn.myhome.database.dao.TemperatureDao
 import az.autumn.myhome.database.entity.TemperatureEntity
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
+import java.io.IOException
 
 class HomeViewModel(
     private val deviceRepository: DeviceRepository,
@@ -24,7 +30,12 @@ class HomeViewModel(
     val allTemperatures: Flow<List<TemperatureEntity>> = temperatureDao.getAllTemperatures()
 
     init {
-        fetchDeviceState()
+        viewModelScope.launch {
+            while (isActive) {
+                fetchDeviceState()
+                delay(5000) // Poll every 5 seconds
+            }
+        }
     }
 
     fun fetchDeviceState() {
@@ -40,8 +51,10 @@ class HomeViewModel(
                 )
                 temperatureDao.insertTemperature(temperatureEntity)
 
-            } catch (e: Exception) {
-                // Handle exceptions
+            } catch (e: IOException) {
+                Log.d("TAG", "fetchDeviceState: ${e.message}")
+            } catch (e: HttpException){
+                Log.d("TAG", "fetchDeviceState: ${e.message}")
             }
         }
     }
@@ -51,8 +64,10 @@ class HomeViewModel(
             try {
                 deviceRepository.updateDeviceState(deviceState)
                 _deviceState.value = deviceState
-            } catch (e: Exception) {
-                // Handle exceptions
+            } catch (e: IOException) {
+                Log.d("fe", "updateDeviceState: ${e.message}")
+            } catch (e: HttpException) {
+                Log.d("fe_http", "updateDeviceState: ${e.message}")
             }
         }
     }

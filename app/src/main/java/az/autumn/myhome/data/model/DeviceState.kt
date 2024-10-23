@@ -1,8 +1,8 @@
 package az.autumn.myhome.data.model
 
 data class DeviceState(
-    val light1: String,
-    val light2: String,
-    val door: String,
+    val light1: Boolean,
+    val light2: Boolean,
+    val door: Boolean,
     val temp: String
 )

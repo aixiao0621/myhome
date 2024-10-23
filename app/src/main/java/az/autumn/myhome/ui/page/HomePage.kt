@@ -39,15 +39,15 @@ fun HomePage(viewModel: HomeViewModel) {
     ) {
         Text(
             text = "Temperature: ${deviceState?.temp ?: "--"}°C",
-            style = MaterialTheme.typography.titleLarge
+            style = MaterialTheme.typography.headlineLarge
         )
 
         // Light 1 Control
         LightControl(
             label = "Light 1",
-            checked = deviceState?.light1 == "1",
+            checked = deviceState?.light1 == true,
             onCheckedChange = { isChecked ->
-                val newState = deviceState?.copy(light1 = if (isChecked) "1" else "0")
+                val newState = deviceState?.copy(light1 = isChecked)
                 if (newState != null) {
                     viewModel.updateDeviceState(newState)
                 }
@@ -62,9 +62,9 @@ fun HomePage(viewModel: HomeViewModel) {
             Text(text = "Light 2", style = MaterialTheme.typography.bodyLarge)
             Spacer(modifier = Modifier.weight(1f))
             Switch(
-                checked = deviceState?.light2 == "1",
+                checked = deviceState?.light2 == true,
                 onCheckedChange = { isChecked ->
-                    val newState = deviceState?.copy(light2 = if (isChecked) "1" else "0")
+                    val newState = deviceState?.copy(light2 = isChecked)
                     if (newState != null) {
                         viewModel.updateDeviceState(newState)
                     }
@@ -77,12 +77,14 @@ fun HomePage(viewModel: HomeViewModel) {
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
         ) {
+            Icon(imageVector = Icons.Rounded.Lock, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+            Spacer(modifier = Modifier.padding(8.dp))
             Text(text = "Door", style = MaterialTheme.typography.bodyLarge)
             Spacer(modifier = Modifier.weight(1f))
             Switch(
-                checked = deviceState?.door == "1",
+                checked = deviceState?.door == true,
                 onCheckedChange = { isChecked ->
-                    val newState = deviceState?.copy(door = if (isChecked) "1" else "0")
+                    val newState = deviceState?.copy(door = if (isChecked) true else false)
                     if (newState != null) {
                         viewModel.updateDeviceState(newState)
                     }
@@ -101,8 +103,6 @@ fun LightControl(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Icon(imageVector = Icons.Rounded.Lock, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
-        Spacer(modifier = Modifier.padding(8.dp))
         Text(text = label, style = MaterialTheme.typography.bodyLarge)
 
         Spacer(modifier = Modifier.weight(1f))
@@ -122,9 +122,9 @@ fun BooleanControl(deviceState:DeviceState,viewModel: HomeViewModel){
         Text(text = "Light 1", style = MaterialTheme.typography.bodyLarge)
         Spacer(modifier = Modifier.weight(1f))
         Switch(
-            checked = deviceState?.light1 == "1",
+            checked = deviceState?.light1 == true,
             onCheckedChange = { isChecked ->
-                val newState = deviceState?.copy(light1 = if (isChecked) "1" else "0")
+                val newState = deviceState?.copy(light1 = isChecked)
                 if (newState != null) {
                     viewModel.updateDeviceState(newState)
                 }
