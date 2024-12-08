@@ -48,6 +48,11 @@ android {
 }
 
 dependencies {
+    implementation("br.com.devsrsouza.compose.icons:font-awesome:1.1.0")
+
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
+
     // Retrofit for network communication
     implementation libs.retrofit
     implementation libs.converter.gson
