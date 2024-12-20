@@ -21,6 +21,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Build
 import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.LocationOn
@@ -133,6 +134,14 @@ fun SettingPage(
             icon = Icons.Outlined.LocationOn,
             onClick = { /* 打开语言选择对话框 */ }
         )
+
+        SettingItem(
+            title = "Others",
+            description = "Change app language",
+            icon = Icons.Outlined.Build,
+            onClick = { /* 打开语言选择对话框 */ }
+        )
+
 
         SettingItem(
             title = "About",

@@ -33,7 +33,7 @@ class HomeViewModel(
         viewModelScope.launch {
             while (isActive) {
                 fetchDeviceState()
-                delay(5000) // Poll every 5 seconds
+                delay(60000) // Poll every 60 seconds
             }
         }
     }
