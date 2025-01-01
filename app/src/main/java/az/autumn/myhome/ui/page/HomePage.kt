@@ -113,7 +113,37 @@ fun HomePage(viewModel: HomeViewModel) {
                    )
                }
            }
-
+           item {
+               Row {
+                   SmallControlCard(
+                       title = "Main Light",
+                       description = "Room",
+                       icon = FontAwesomeIcons.Solid.Lightbulb,
+                       isChecked = deviceState?.light2 == true,
+                       onCheckedChange = { isChecked ->
+                           val newState = deviceState?.copy(light2 = isChecked)
+                           if (newState != null) {
+                               viewModel.updateDeviceState(newState)
+                           }
+                       },
+                       modifier = Modifier.padding(6.dp)
+                   )
+                   Spacer(modifier = Modifier.width(8.dp))
+                   SmallControlCard(
+                       title = "Bedside",
+                       description = "Room",
+                       icon = FontAwesomeIcons.Solid.Lightbulb,
+                       isChecked = deviceState?.light1 == true,
+                       onCheckedChange = { isChecked ->
+                           val newState = deviceState?.copy(light1 = isChecked)
+                           if (newState != null) {
+                               viewModel.updateDeviceState(newState)
+                           }
+                       },
+                       modifier = Modifier.padding(6.dp)
+                   )
+               }
+           }
            item {
                Row {
                    SmallControlCard(
